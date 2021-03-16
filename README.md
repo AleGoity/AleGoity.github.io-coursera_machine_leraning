@@ -7,7 +7,12 @@ output:
   pdf_document: default
   html_document: default
 ---
-#Summary
+# Before start  
+
+To make it easier the visualization of the project a pdf version was uploaded. In the pdf version you can see the plots related to the project.
+
+
+# Summary
 We will analyzed the data using decision trees. I generated two models, the first using all the variables and a second model with only some variables. (I tried to performed a random forest analysis but my computer was not able to complete the prediction).
 Finally, I predicted the classe of the testing data using the model with better performance. Additionally, I compared the difference between the results obtain with the two models
 
