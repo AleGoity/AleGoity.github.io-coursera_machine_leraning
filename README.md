@@ -12,9 +12,10 @@ output:
 To make it easier the visualization of the project a pdf version was uploaded. In the pdf version you can see the plots related to the project.
 
 
+
 # Summary
-We will analyzed the data using decision trees. I generated two models, the first using all the variables and a second model with only some variables. (I tried to performed a random forest analysis but my computer was not able to complete the prediction).
-Finally, I predicted the classe of the testing data using the model with better performance. Additionally, I compared the difference between the results obtain with the two models
+We will analyzed the data using decision trees. I generated three models. Two models based in  decision trees, the first using all the variables and a second model with only some variables. And a third model using parallel random forest (parRF).
+I alsp predicted the classe of the testing data using all the models. I compared the difference between the results obtain with the decision trees models and finally the prediction with the random forest model that predicted correctly all the testing predictions.
 
 ## Read and cleaning the data
 
@@ -118,6 +119,7 @@ testing_prediction1<-predict(model_DT1, newdata = testing, type="class")
 testing_prediction1
 ```
 
+
 # EXTRA
 We will compare the predictions obtain using model_DT1 and model_DT2.
 
@@ -134,3 +136,46 @@ sum(testing_prediction1 == testing_prediction2)
 
 We obtain equal results in 18 of 20 cases using any of the two models. Observing differences in two cases were model_DT1 should have a better performance.
 
+# Model random forest
+
+## Create a random forest model with cross validation to predict the accuracy of the model.
+To diminish calculation time it was set to 3-fold cross validation and 100 trees. And parallele random forest (parRF) was used. 
+
+```{r}
+library(doParallel)
+model_RF<- train(classe~., data = training_data, method = "parRF",  trControl = trainControl("cv", number = 3, allowParallel = TRUE), na.action = na.pass, ntrees=100)
+
+
+plot(model_RF) 
+```
+
+To evaluate the values of the model_RF
+
+```{r}
+model_RF$finalModel
+```
+Error rate is 0.25%
+
+Make predictions on the test data
+```{r}
+testing_data$classe<-as.factor(testing_data$classe)
+predicted_classe <-predict(model_RF, testing_data)
+
+```
+
+Compute model accuracy rate on test data
+```{r}
+mean(predicted_classe == testing_data$classe)
+```
+
+The accuracy of model_DT2 is 99.8%
+
+# Predict testing cases
+Based on the accuracy of the models we will use model_DT1 (use all variables to make the prediction).
+
+```{r}
+testing_prediction_RF<-predict(model_RF, newdata = testing)
+testing_prediction_RF
+```
+
+## Using random forest we were able to predict correctly a 100% of the predictions
