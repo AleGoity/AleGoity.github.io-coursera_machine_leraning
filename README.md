@@ -13,7 +13,7 @@ To make it easier the visualization of the project a pdf version was uploaded. I
 
 
 
-#Summary
+# Summary
 We will analyzed the data using decision trees. I generated three models. Two models based in  decision trees, the first using all the variables and a second model with only some variables. And a third model using parallel random forest (parRF).
 I alsp predicted the classe of the testing data using all the models. I compared the difference between the results obtain with the decision trees models and finally the prediction with the random forest model that predicted correctly all the testing predictions.
 
